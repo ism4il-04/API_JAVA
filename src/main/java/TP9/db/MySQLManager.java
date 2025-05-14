@@ -1,33 +1,32 @@
-package db;
-
-import util.DBConfigLoader;
-import lombok.Data;
+package TP9.db;
 
 import java.sql.*;
 import java.util.*;
 
-@Data
-public class PostgreSQLManager implements DatabaseManager {
+import TP9.util.DBConfigLoader;
+import lombok.Data;
 
-    Properties props = DBConfigLoader.chargeDBConfig(configPath, "postgresql");
+@Data
+public class MySQLManager implements DatabaseManager {
+
+    Properties props;
     Connection connection;
     Statement stm;
-    String url = props.getProperty("url");
-    String username = props.getProperty("user");
-    String password = props.getProperty("password");
-
+    String url;
+    String username;
+    String password;
 
 
     @Override
     public Statement connect() throws ConnectException {
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection= DriverManager.getConnection(url, username, password);
             stm = connection.createStatement();
-            return stm;
         } catch (SQLException | ClassNotFoundException e) {
-            throw new ConnectException("Erreur de connexion a la base de donnee");
+            throw new ConnectException("Erreur de connexion", e);
         }
+        return null;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class PostgreSQLManager implements DatabaseManager {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new ConnectException("Erreur de connexion");
+            throw new ConnectException("Erreur de connexion",e);
         }
     }
 
@@ -54,7 +53,7 @@ public class PostgreSQLManager implements DatabaseManager {
                 results.add(row);
             }
         } catch (SQLException e){
-            throw new DQLException("Erreur de selection");
+            throw new DQLException("Erreur de selection",e);
         }
         return results;
     }
@@ -66,7 +65,14 @@ public class PostgreSQLManager implements DatabaseManager {
             return stmt.executeUpdate(sql);
 
         } catch (SQLException e) {
-            throw new DMLException("Erreur DML");
+            throw new DMLException("Erreur DML", e);
         }
+    }
+
+    public MySQLManager(String path) {
+        this.props = DBConfigLoader.chargeDBConfig(path, "mysql");
+        this.url = props.getProperty("url");
+        this.username = props.getProperty("user");
+        this.password = props.getProperty("password");
     }
 }

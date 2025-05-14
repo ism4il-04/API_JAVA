@@ -1,5 +1,5 @@
-import db.DatabaseManager;
-import db.PostgreSQLManager;
+import TP9.db.DatabaseManager;
+import TP9.db.PostgreSQLManager;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class PostgreSQLTest {
 
     @BeforeAll
     public static void setup() throws Exception {
-        db = new PostgreSQLManager();
+        db = new PostgreSQLManager("src/main/resources/db.properties");
         db.connect();
         System.out.println("connection avec success");
     }
@@ -56,6 +56,7 @@ public class PostgreSQLTest {
     public void testInsertUserFromCSV() throws Exception {
         List<Map<String, String>> csvRows = CSVLoader.loadCSV("src/test/resources/test_data_postgres.csv");
         assertFalse(csvRows.isEmpty(), "Le fichier CSV est vide");
+        System.out.println("Le fichier CSV contient " + csvRows.size() + " lignes");
 
         boolean utilisateurTrouvee = false;
 

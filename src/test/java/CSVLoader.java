@@ -6,10 +6,8 @@ import java.nio.file.*;
 import java.util.*;
 
 public class CSVLoader {
-
     public static List<Map<String, String>> loadCSV(String filePath) throws IOException {
         List<Map<String, String>> data = new ArrayList<>();
-
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(filePath));
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())
@@ -22,7 +20,6 @@ public class CSVLoader {
                 data.add(row);
             }
         }
-
         return data;
     }
 }

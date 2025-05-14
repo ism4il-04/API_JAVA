@@ -1,31 +1,40 @@
-package db;
+package TP9.db;
+
+import TP9.util.DBConfigLoader;
+import lombok.Data;
 
 import java.sql.*;
 import java.util.*;
-import util.DBConfigLoader;
-import lombok.Data;
 
 @Data
-public class MySQLManager implements DatabaseManager{
+public class PostgreSQLManager implements DatabaseManager {
 
-    Properties props = DBConfigLoader.chargeDBConfig(configPath, "mysql");
+    Properties props;
     Connection connection;
     Statement stm;
-    String url = props.getProperty("url");
-    String username = props.getProperty("user");
-    String password = props.getProperty("password");
+    String url;
+    String username;
+    private String password;
+
+    public PostgreSQLManager(String path) {
+        this.props = DBConfigLoader.chargeDBConfig(path, "postgresql");
+        this.url = props.getProperty("url");
+        this.username = props.getProperty("user");
+        this.password = props.getProperty("password");
+    }
+
 
 
     @Override
     public Statement connect() throws ConnectException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
             connection= DriverManager.getConnection(url, username, password);
             stm = connection.createStatement();
+            return stm;
         } catch (SQLException | ClassNotFoundException e) {
-            throw new ConnectException("Erreur de connexion");
+            throw new ConnectException("Erreur de connexion a la base de donnee", e);
         }
-        return null;
     }
 
     @Override
@@ -33,7 +42,7 @@ public class MySQLManager implements DatabaseManager{
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new ConnectException("Erreur de connexion");
+            throw new ConnectException("Erreur de connexion", e);
         }
     }
 
@@ -52,7 +61,7 @@ public class MySQLManager implements DatabaseManager{
                 results.add(row);
             }
         } catch (SQLException e){
-            throw new DQLException("Erreur de selection");
+            throw new DQLException("Erreur de selection", e);
         }
         return results;
     }
@@ -64,7 +73,7 @@ public class MySQLManager implements DatabaseManager{
             return stmt.executeUpdate(sql);
 
         } catch (SQLException e) {
-            throw new DMLException("Erreur DML");
+            throw new DMLException("Erreur DML", e);
         }
     }
 }

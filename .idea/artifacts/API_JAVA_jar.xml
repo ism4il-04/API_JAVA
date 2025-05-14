@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="API_JAVA:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/API_JAVA_jar</output-path>
+    <root id="archive" name="API_JAVA.jar">
+      <element id="module-output" name="API_JAVA" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/mysql/mysql-connector-j/9.2.0/mysql-connector-j-9.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/checkerframework/checker-qual/3.48.3/checker-qual-3.48.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.18.0/commons-codec-1.18.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/microsoft/sqlserver/mssql-jdbc/12.10.0.jre11/mssql-jdbc-12.10.0.jre11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-csv/1.14.0/commons-csv-1.14.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/postgresql/postgresql/42.7.5/postgresql-42.7.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/4.29.0/protobuf-java-4.29.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-io/commons-io/2.18.0/commons-io-2.18.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

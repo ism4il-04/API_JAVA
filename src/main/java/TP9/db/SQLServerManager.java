@@ -1,6 +1,6 @@
-package db;
+package TP9.db;
 
-import util.DBConfigLoader;
+import TP9.util.DBConfigLoader;
 import lombok.Data;
 
 import java.sql.*;
@@ -8,13 +8,20 @@ import java.util.*;
 
 
 @Data
-public class SQLServerManager implements DatabaseManager{
-    Properties props = DBConfigLoader.chargeDBConfig(configPath, "sqlserver");
+public class SQLServerManager implements DatabaseManager {
+    Properties props;
     Connection connection;
     Statement stm;
-    String url = props.getProperty("url");
-    String username = props.getProperty("user");
-    String password = props.getProperty("password");
+    String url;
+    String username;
+    String password;
+
+    public SQLServerManager(String path) {
+        this.props = DBConfigLoader.chargeDBConfig(path, "sqlserver");
+        this.url = props.getProperty("url");
+        this.username = props.getProperty("user");
+        this.password = props.getProperty("password");
+    }
 
 
 
@@ -26,7 +33,7 @@ public class SQLServerManager implements DatabaseManager{
             stm = connection.createStatement();
             return stm;
         } catch (SQLException | ClassNotFoundException e) {
-            throw new ConnectException("Erreur de connexion");
+            throw new ConnectException("Erreur de connexion", e);
         }
     }
 
@@ -35,7 +42,7 @@ public class SQLServerManager implements DatabaseManager{
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new ConnectException("Erreur de connexion");
+            throw new ConnectException("Erreur de connexion", e);
         }
     }
 
@@ -54,7 +61,7 @@ public class SQLServerManager implements DatabaseManager{
                 results.add(row);
             }
         } catch (SQLException e){
-            throw new DQLException("Erreur de selection");
+            throw new DQLException("Erreur de selection", e);
         }
         return results;
     }
@@ -66,7 +73,7 @@ public class SQLServerManager implements DatabaseManager{
             return stmt.executeUpdate(sql);
 
         } catch (SQLException e) {
-            throw new DMLException("Erreur DML");
+            throw new DMLException("Erreur DML", e);
         }
     }
 

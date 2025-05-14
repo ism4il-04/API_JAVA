@@ -1,5 +1,5 @@
-import db.DatabaseManager;
-import db.SQLServerManager;
+import TP9.db.DatabaseManager;
+import TP9.db.SQLServerManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class SQLServerTest {
 
     @BeforeAll
     public static void setup() throws Exception {
-        db = new SQLServerManager();
+        db = new SQLServerManager("src/main/resources/db.properties");
         db.connect();
     }
     @AfterAll

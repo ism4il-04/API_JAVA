@@ -1,5 +1,5 @@
-import db.DatabaseManager;
-import db.MySQLManager;
+import TP9.db.DatabaseManager;
+import TP9.db.MySQLManager;
 import org.junit.jupiter.api.*;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +10,7 @@ public class MySQLTest {
 
     @BeforeAll
     public static void setup() throws Exception {
-        db = new MySQLManager();
+        db = new MySQLManager("src/main/resources/db.properties");
         db.connect();
         System.out.println("Connection avec success");
     }
@@ -38,7 +38,6 @@ public class MySQLTest {
         for (Map<String, Object> row : results) {
             System.out.println(row.get("nom"));
         }
-
     }
 
     @Test
@@ -63,7 +62,7 @@ public class MySQLTest {
 
 
     @Test
-    public void testInsertUserFromCSV() throws Exception {
+    public void testSelectUserFromCSV() throws Exception {
         List<Map<String, String>> csvRows = CSVLoader.loadCSV("src/test/resources/test_data_mysql.csv");
         assertFalse(csvRows.isEmpty(), "Le fichier CSV est vide");
 

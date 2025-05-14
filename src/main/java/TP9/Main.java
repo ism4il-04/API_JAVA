@@ -1,5 +1,9 @@
+package TP9;
 
-import db.*;
+import TP9.db.DatabaseManager;
+import TP9.db.MySQLManager;
+import TP9.db.PostgreSQLManager;
+import TP9.db.SQLServerManager;
 
 import java.util.*;
 
@@ -19,9 +23,9 @@ public class Main {
             scanner.nextLine(); // nettoyer le saut de ligne
 
             switch (choixSGBD) {
-                case 1 -> db = new MySQLManager();
-                case 2 -> db = new PostgreSQLManager();
-                case 3 -> db = new SQLServerManager();
+                case 1 -> db = new MySQLManager("src/main/resources/db.properties");
+                case 2 -> db = new PostgreSQLManager("src/main/resources/db.properties");
+                case 3 -> db = new SQLServerManager("src/main/resources/db.properties");
                 default -> {
                     System.out.println("Choix invalide.");
                     return;
